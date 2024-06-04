@@ -1,5 +1,4 @@
 import { SSTConfig } from "sst";
-import { API } from "./stacks/MyStack";
 import { StorageStack } from "./stacks/StorageStack";
 
 export default {
