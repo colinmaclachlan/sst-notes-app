@@ -1,7 +1,6 @@
 import { Bucket, StackContext, Table } from 'sst/constructs';
 
 export function StorageStack({ stack }: StackContext) {
-    // create dynamo db table
     const table = new Table(stack, "Notes", {
         fields: {
             userId: "string",
