@@ -3,6 +3,7 @@ import handler from "@notes/core/handler";
 import dynamoDb from "@notes/core/dynamodb";
 
 export const main = handler(async (event) => {
+    console.log('test');
     const params = {
         TableName: Table.Notes.tableName,
         KeyConditionExpression: "userId = :userId",
