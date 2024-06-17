@@ -8,11 +8,18 @@ export function FrontendStack({ stack, app }: StackContext) {
     const { auth } = use(AuthStack);
     const { bucket } = use(StorageStack);
     const site = new StaticSite(stack, "ReactSite", {
+        customDomain:
+            app.stage === "prod"
+                ? {
+                    domainName: "<YOUR DOMAIN>",
+                    domainAlias: "www.<YOUR DOMAIN>",
+                }
+                : undefined,
         path: "packages/frontend",
         buildCommand: "pnpm run build",
         buildOutput: "dist",
         environment: {
-            VITE_API_URL: api.url,
+            VITE_API_URL: api.customDomainUrl || api.url,
             VITE_REGION: app.region,
             VITE_BUCKET: bucket.bucketName,
             VITE_USER_POOL_ID: auth.userPoolId,
@@ -21,6 +28,6 @@ export function FrontendStack({ stack, app }: StackContext) {
         }
     });
     stack.addOutputs({
-        SiteUrl: site.url,
+        SiteUrl: site.customDomainUrl || site.url,
     });
 }

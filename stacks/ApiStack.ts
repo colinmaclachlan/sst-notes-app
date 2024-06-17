@@ -5,6 +5,7 @@ export function ApiStack({ stack }: StackContext) {
     const { table } = use(StorageStack);
     const STRIPE_SECRET_KEY = new Config.Secret(stack, "STRIPE_SECRET_KEY");
     const api = new Api(stack, "Api", {
+        customDomain: app.stage === "prod" ? "<api.yourdomainhere.com>" : undefined,
         defaults: {
             authorizer: "iam",
             function: {
@@ -22,7 +23,7 @@ export function ApiStack({ stack }: StackContext) {
     });
 
     stack.addOutputs({
-        ApiEndpoint: api.url,
+        ApiEndpoint: api.customDomainUrl || api.url,
     });
 
     return {
